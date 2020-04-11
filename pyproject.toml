@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "printagram"
+version = "0.1.0"
+description = "Checks for new instagram post and prints them."
+authors = ["Andy McNeil"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+pytz = "^2019.3"
+apscheduler = "^3.6.3"
+
+[tool.poetry.dev-dependencies]
+wheel = "^0.34.2"
+
+[tool.poetry.scripts]
+printagram = "printagram.main:main"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
