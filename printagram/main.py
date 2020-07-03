@@ -22,15 +22,22 @@ class InstagramAccount:
         self.filename = filename
         try:
             with open(self.filename, 'r') as f:
-                self.lastpost_id = f.read().strip()
+                self.previous_post_ids = [line.rstrip() for line in f]
         except:
-            self.lastpost_id = None
+            self.previous_post_ids = []
     
     #checks for new posts
     def check_for_post(self):
         #get users most recent post
         try:
             media_request = f'https://graph.instagram.com/{self.user_id}/media?access_token={self.access_token}'
+        except Exception as err:
+            print("error checking for posts. request and response follow")
+            print()
+            traceback.print_tb(err.__traceback__)
+            sys.exit()
+
+        try:
             self.currentmedia = requests.get(media_request)
             self.currentpost_id = self.currentmedia.json()["data"][0]["id"]
 
@@ -44,7 +51,7 @@ class InstagramAccount:
             sys.exit()
 
         #check if the most recent post is new or the same as the last post, if not, get new post
-        if self.currentpost_id != self.lastpost_id:
+        if not self.currentpost_id in self.previous_post_ids:
             try:
                 post_request = f'https://graph.instagram.com/{self.currentpost_id}?fields=id,media_type,media_url,username,timestamp,thumbnail_url,caption&access_token={self.access_token}'
                 self.currentpost = requests.get(post_request)
@@ -60,11 +67,11 @@ class InstagramAccount:
 
             self.print_insta()
             #update lastpost_id to new post ide
-            self.lastpost_id = self.currentpost_id
+            self.previous_post_ids.append(self.currentpost_id)
             #write lastpost_id to file
             try:
-                with open(self.filename, 'w') as f:
-                    f.write(self.lastpost_id)
+                with open(self.filename, 'a+') as f:
+                    f.write(self.currentpost_id)
             except:
                 pass
     
