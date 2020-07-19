@@ -1,0 +1,15 @@
+[Unit]
+Description=Printagram
+After=network-online.target
+
+[Service]
+ExecStart=/home/pi/.local/bin/printagram 
+WorkingDirectory=/home/pi/.printagram
+StandardOutput=file:/home/pi/.printagram/systemd.log
+StandardError=file:/home/pi/.printagram/systemd.log
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+

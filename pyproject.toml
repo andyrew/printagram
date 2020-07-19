@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "printagram"
-version = "0.1.0"
+version = "1.0.0"
 description = "Checks for new instagram post and prints them."
 authors = ["Andy McNeil"]
 license = "MIT"
@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.6"
 pytz = "^2019.3"
 apscheduler = "^3.6.3"
+requests = "^2.24.0"
 
 [tool.poetry.dev-dependencies]
 wheel = "^0.34.2"

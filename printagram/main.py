@@ -71,7 +71,7 @@ class InstagramAccount:
             #write lastpost_id to file
             try:
                 with open(self.filename, 'a+') as f:
-                    f.write(self.currentpost_id)
+                    f.write(self.currentpost_id + '\n')
             except:
                 pass
     
